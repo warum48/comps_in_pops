@@ -1,0 +1,102 @@
+:root {
+  --anim_dur_enter: 500ms;
+  --anim_dur_exit: 300ms;
+}
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+h1 {
+  margin-top: 20px;
+}
+/*-----------component box------------*/
+.compcont {
+  border: solid 1px gray;
+  border-radius: 8px;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.compcont .head {
+  background-color: rebeccapurple;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+}
+.compcont .comp {
+  padding: 10px;
+}
+
+/*------------popup--------------*/
+.popup_box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: center; /*flex-end; */ /*center;*/
+  /*perspective-origin: 75%;*/
+  perspective: 500px;
+}
+.popup_box .popup-bg {
+  background: #f0f;
+  opacity: 0.4;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+}
+.popup_box .popup {
+  position: relative;
+  z-index: 10;
+  background: #fff;
+  border-radius: 20px;
+  color: #000;
+  max-width: 463px;
+  min-width: 463px;
+  min-height: 600px;
+  margin: 15px 15px 15px 0;
+}
+/*----------popup_animation --------*/
+.popup_animation-enter {
+  opacity: 0;
+}
+.popup_animation-enter .popup {
+  transform: translateZ(100px) rotateY(90deg) translateX(90px) scale(0.2);
+}
+.popup_animation-enter-active {
+  opacity: 1;
+  transition: transform var(--anim_dur_enter);
+}
+.popup_animation-enter-active .popup {
+  opacity: 1;
+  transform: translateZ(0px) rotateY(0deg) translateX(0px) scale(1);
+  transition: transform var(--anim_dur_enter);
+}
+.popup_animation-exit {
+  opacity: 1;
+}
+.popup_animation-exit-active {
+  opacity: 0;
+  transition: opacity var(--anim_dur_exit);
+}
+.popup_animation-exit-active .popup {
+  transition: transform var(--anim_dur_exit);
+  transform: rotateX(-75deg) translateY(100px) translateZ(300px) scale(0.3);
+}
+
+/*--------svg----------------*/
+svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
