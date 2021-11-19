@@ -11,7 +11,6 @@ export default function App() {
     //console.log("num", num);
     setNum((num) => num + amount);
     //gsap.from(".draw-me", { duration: 1, stagger: 0.1, drawSVG: 0 });
-    //gsap.to(".draw-me", { duration: 1, drawSVG: "20% 80%" });
     /*gsap.to(".draw-me", { duration: 1, opacity: 0.4 });
     gsap.fromTo(
       ".draw-me",

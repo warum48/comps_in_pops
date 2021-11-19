@@ -109,6 +109,45 @@ const db = [
         ))}
       </Slider>
     )
+  },
+
+  {
+    id: 1,
+    date: "1.11.2021",
+    click_id: "click_1",
+    view_id: "view_1",
+    head: "long html",
+    content: ` 
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+              <h2>Long HTML</h2>
+
+              <a className="a_text a_main"  rel="noreferrer noopener" href="https://www.google.com" target="_blank">
+                <div>Ccылка в контенте</div>
+              </a>`,
+    iframe: "",
+    reactcontent: ""
   }
 ];
 
