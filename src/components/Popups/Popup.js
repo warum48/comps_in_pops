@@ -1,14 +1,22 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
+import { styled } from "@mui/system";
 import { Transition, CSSTransition } from "react-transition-group";
+import SimpleBar from "simplebar-react";
+import "simplebar/dist/simplebar.min.css";
 //import { Container, Row, Col } from "react-bootstrap";
 import Html from "../Html";
+import useLockBodyScroll from "../Utils";
 import LinkGA from "../GoogleAnalytics/LinkGA";
 import DB from "./DB";
+import LockBodyScrollProxy from "./LockBodyScrollProxy";
+
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 //import { gaEvents } from "components/SpGA/gaEvents";
 
 const Popup = (props) => {
+  //useLockBodyScroll();
+  /* proxy needed because of some react-transition-group component mounting peculiarity */
   const [curPopup, setCurPopup] = useState(DB[0]);
   const [enterDone, setEnterDone] = useState(false);
   useEffect(() => {
@@ -45,6 +53,25 @@ const Popup = (props) => {
     }
     //exited: { transform: "rotateY(90deg)" }
   };*/
+  const Popup_box = styled("div")({
+    color: "darkslategray",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 20,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center" /*center;*/ /*flex-end; */,
+    /*perspective-origin: 75%;*/
+    perspective: "500px",
+
+    "&.lala": {
+      color: "#ff00ff"
+    }
+  });
+  //https://stackoverflow.com/questions/50368417/styling-element-inside-class-mui
 
   return (
     <CSSTransition
@@ -55,35 +82,41 @@ const Popup = (props) => {
         enter: duration,
         exit: duration
       }}
-      mountOnEnter
+      //mountOnEnter
       unmountOnExit
       onEntered={() => setEnterDone(true)}
       onExited={() => setEnterDone(false)}
     >
       {(state) => (
-        <div className="popup_box">
+        <Popup_box className="popup_box">
+          {state === "entered" && <LockBodyScrollProxy />}
+          {/* proxy needed because of some react-transition-group component mounting peculiarity */}
           <div className="popup-bg" onClick={props.closePopup}></div>
           <div className="popup">
             <div className="popup-wrap">
               <h1>{curPopup?.head}</h1>
-              <div onClick={props.closePopup}>X close X</div>
-              <div onClick={props.prevPopup}>prev</div>
-              <div onClick={props.nextPopup}>next</div>
+
               <div>curPopupNum {props.curPopupNum}</div>
               <div>{curPopup?.date}</div>
-              <Html>{curPopup?.content}</Html>
+              <SimpleBar style={{ maxHeight: 300 }}>
+                <Html>{curPopup?.content}</Html>
 
-              {state === "entered" && curPopup?.iframe && (
-                <div dangerouslySetInnerHTML={{ __html: curPopup?.iframe }} />
-              )}
-              {/*{enterDone && curPopup?.reactcontent}*/}
-              {state === "entered" && curPopup?.reactcontent}
-              {/* without state condition slick damages transform rotate */}
+                {state === "entered" && curPopup?.iframe && (
+                  <div dangerouslySetInnerHTML={{ __html: curPopup?.iframe }} />
+                )}
+                {/*{enterDone && curPopup?.reactcontent}*/}
+                {state === "entered" && curPopup?.reactcontent}
+                {/* without state condition slick damages transform rotate */}
+              </SimpleBar>
               <hr />
               <div>popup anim state: {state}</div>
+
+              <div onClick={props.prevPopup}>prev</div>
+              <div onClick={props.nextPopup}>next</div>
+              <div onClick={props.closePopup}>X close X</div>
             </div>
           </div>
-        </div>
+        </Popup_box>
       )}
     </CSSTransition>
   );

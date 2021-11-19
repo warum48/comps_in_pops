@@ -1,6 +1,6 @@
 import LinkGA from "../GoogleAnalytics/LinkGA";
 import Slider from "react-slick";
-
+import SlickSlider from "./SlickSlider";
 const slickSettings = {
   dots: true,
   infinite: true,
@@ -112,7 +112,7 @@ const db = [
   },
 
   {
-    id: 1,
+    id: 7,
     date: "1.11.2021",
     click_id: "click_1",
     view_id: "view_1",
@@ -148,6 +148,14 @@ const db = [
               </a>`,
     iframe: "",
     reactcontent: ""
+  },
+
+  {
+    id: 8,
+    date: "1.11.2021",
+    head: "Slick Slider Component",
+    content: ``,
+    reactcontent: <SlickSlider />
   }
 ];
 
