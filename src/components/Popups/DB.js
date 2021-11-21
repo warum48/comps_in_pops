@@ -1,6 +1,7 @@
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import LinkGA from "../GoogleAnalytics/LinkGA";
 import Slider from "react-slick";
-import SlickSlider from "./SlickSlider";
+import SlickSlider from "../SlickSlider";
 const slickSettings = {
   dots: true,
   infinite: true,

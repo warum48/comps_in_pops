@@ -44,7 +44,7 @@ const PopupTriggers = (props) => {
 
   useEffect(() => {
     if (!isFirstRender) {
-      if (curPopupNum != -1) {
+      if (curPopupNum !== -1) {
         setPopupIsOpen(true);
       } else {
         setPopupIsOpen(false);

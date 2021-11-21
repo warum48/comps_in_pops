@@ -47,16 +47,16 @@ h1 {
 }
 .popup_box .popup-bg {
   background: #f0f;
-  opacity: 0.4;
+  /*opacity: 0.4;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 5;
+  z-index: 5;*/
 }
 .popup_box .popup {
-  position: relative;
+  /*position: relative;
   z-index: 10;
   background: rgb(226, 226, 226);
   border-radius: 20px;
@@ -64,7 +64,7 @@ h1 {
   max-width: 480px;
   min-width: 480px;
   min-height: 600px;
-  margin: 15px 15px 15px 0;
+  margin: 15px 15px 15px 0;*/
 }
 /*-----------slick and scroll in popup----------*/
 .sp_slider_container {
@@ -73,7 +73,7 @@ h1 {
   min-height: 250px;
 }
 /*----------popup_animation --------*/
-.popup_animation-enter {
+/*.popup_animation-enter {
   opacity: 0;
 }
 .popup_animation-enter .popup {
@@ -99,7 +99,7 @@ h1 {
   transition: transform var(--anim_dur_exit);
   transform: rotateX(-75deg) translateY(100px) translateZ(300px) scale(0.3);
 }
-
+*/
 /*--------svg----------------*/
 svg {
   width: 100%;

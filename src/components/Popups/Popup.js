@@ -5,7 +5,7 @@ import SimpleBar from "simplebar-react";
 import "simplebar/dist/simplebar.min.css";
 //import { Container, Row, Col } from "react-bootstrap";
 import Html from "../Html";
-import useLockBodyScroll from "../Utils";
+import { useLockBodyScroll, getStyleObjectFromString } from "../Utils";
 import LinkGA from "../GoogleAnalytics/LinkGA";
 import DB from "./DB";
 import LockBodyScrollProxy from "./LockBodyScrollProxy";
@@ -65,12 +65,69 @@ const Popup = (props) => {
     alignItems: "center",
     justifyContent: "center" /*center;*/ /*flex-end; */,
     /*perspective-origin: 75%;*/
-    perspective: "500px",
 
-    "&.lala": {
-      color: "#ff00ff"
+    "&.popup_animation-enter": {
+      opacity: 0
+    },
+    "&.popup_animation-enter-active": {
+      opacity: 1,
+      transition: "transform 500ms"
+    },
+    "&.popup_animation-exit": {
+      opacity: 1
+    },
+    "&.popup_animation-exit-active ": {
+      opacity: 0,
+      transition: "opacity 500ms"
+    },
+    "&.popup_animation-enter .popup": {
+      transform: "translateZ(100px) rotateY(90deg) translateX(90px) scale(0.2)"
+    },
+    "&.popup_animation-enter-active .popup": {
+      opacity: 1,
+      transform: "translateZ(0px) rotateY(0deg) translateX(0px) scale(1)",
+      transition: "transform 300ms"
+    },
+    "&.popup_animation-exit-active .popup": {
+      transition: "transform 300ms",
+      transform:
+        "rotateX(-75deg) translateY(100px) translateZ(300px) scale(0.3)"
     }
   });
+  const PopupBg = styled("div")({
+    background: "#ff00ff",
+    opacity: 0.4,
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 5
+  });
+
+  const PopupPerspective = styled("div")({
+    perspective: "500px",
+    zIndex: 7
+  });
+
+  const Popup = styled("div")({
+    position: "relative",
+    zIndex: 10,
+    background: "#fff",
+    borderRadius: "20px",
+    color: "#000",
+    maxWidth: "500px",
+    minWidth: "480px",
+    minHeight: "600px",
+    margin: "15px 15px 15px 0"
+  }); //not working yet
+  /*getStyleObjectFromString(`position:relative,
+    z-index:10,
+    background:#fff,
+    border-radius:20px,
+    color:#000,
+    max-width:463px,
+    margin:15px 15px 15px 0`)*/
   //https://stackoverflow.com/questions/50368417/styling-element-inside-class-mui
 
   return (
@@ -91,31 +148,35 @@ const Popup = (props) => {
         <Popup_box className="popup_box">
           {state === "entered" && <LockBodyScrollProxy />}
           {/* proxy needed because of some react-transition-group component mounting peculiarity */}
-          <div className="popup-bg" onClick={props.closePopup}></div>
-          <div className="popup">
-            <div className="popup-wrap">
-              <h1>{curPopup?.head}</h1>
+          <PopupBg className="popup-bg" onClick={props.closePopup}></PopupBg>
+          <PopupPerspective>
+            <Popup className="popup">
+              <div className="popup-wrap">
+                <h1>{curPopup?.head}</h1>
 
-              <div>curPopupNum {props.curPopupNum}</div>
-              <div>{curPopup?.date}</div>
-              <SimpleBar style={{ maxHeight: 300 }}>
-                <Html>{curPopup?.content}</Html>
+                <div>curPopupNum {props.curPopupNum}</div>
+                <div>{curPopup?.date}</div>
+                <SimpleBar style={{ maxHeight: 300 }}>
+                  <Html>{curPopup?.content}</Html>
 
-                {state === "entered" && curPopup?.iframe && (
-                  <div dangerouslySetInnerHTML={{ __html: curPopup?.iframe }} />
-                )}
-                {/*{enterDone && curPopup?.reactcontent}*/}
-                {state === "entered" && curPopup?.reactcontent}
-                {/* without state condition slick damages transform rotate */}
-              </SimpleBar>
-              <hr />
-              <div>popup anim state: {state}</div>
+                  {state === "entered" && curPopup?.iframe && (
+                    <div
+                      dangerouslySetInnerHTML={{ __html: curPopup?.iframe }}
+                    />
+                  )}
+                  {/*{enterDone && curPopup?.reactcontent}*/}
+                  {state === "entered" && curPopup?.reactcontent}
+                  {/* without state condition slick damages transform rotate */}
+                </SimpleBar>
+                <hr />
+                <div>popup anim state: {state}</div>
 
-              <div onClick={props.prevPopup}>prev</div>
-              <div onClick={props.nextPopup}>next</div>
-              <div onClick={props.closePopup}>X close X</div>
-            </div>
-          </div>
+                <div onClick={props.prevPopup}>prev</div>
+                <div onClick={props.nextPopup}>next</div>
+                <div onClick={props.closePopup}>X close X</div>
+              </div>
+            </Popup>
+          </PopupPerspective>
         </Popup_box>
       )}
     </CSSTransition>
