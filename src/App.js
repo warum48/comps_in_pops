@@ -8,7 +8,6 @@ import PopupTriggers from "./components/Popups/PopupTriggers";
 export default function App() {
   const [num, setNum] = useState(0);
   function addNum(amount) {
-    //console.log("num", num);
     setNum((num) => num + amount);
     //gsap.from(".draw-me", { duration: 1, stagger: 0.1, drawSVG: 0 });
     /*gsap.to(".draw-me", { duration: 1, opacity: 0.4 });

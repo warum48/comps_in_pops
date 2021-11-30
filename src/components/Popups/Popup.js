@@ -8,13 +8,18 @@ import Html from "../Html";
 import { useLockBodyScroll, getStyleObjectFromString } from "../Utils";
 import LinkGA from "../GoogleAnalytics/LinkGA";
 import DB from "./DB";
+//import DBfunc from "./DBfunc";
 import LockBodyScrollProxy from "./LockBodyScrollProxy";
-
+import { Scrollbars } from "react-custom-scrollbars-patched";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "overlayscrollbars/css/OverlayScrollbars.css";
+import { OverlayScrollbarsComponent } from "overlayscrollbars-react";
 //import { gaEvents } from "components/SpGA/gaEvents";
 
 const Popup = (props) => {
+  const [curId] = useState("testId_000");
+  //DB.props.curId = "ioioioio";
   //useLockBodyScroll();
   /* proxy needed because of some react-transition-group component mounting peculiarity */
   const [curPopup, setCurPopup] = useState(DB[0]);
@@ -23,6 +28,8 @@ const Popup = (props) => {
     console.log("props.curPopupNum", props.curPopupNum);
     setCurPopup(DB[props.curPopupNum]);
     console.log("db[0]", DB[0]);
+    //console.log("db.props", DB.props.curId);
+    //console.log("DBfunc", DBfunc.getCurId());
   }, [props.curPopupNum]);
 
   const duration = 500;
@@ -119,8 +126,22 @@ const Popup = (props) => {
     maxWidth: "500px",
     minWidth: "480px",
     minHeight: "600px",
-    margin: "15px 15px 15px 0"
-  }); //not working yet
+    margin: "15px 15px 15px 0",
+    "@media(max-width:600px)": {
+      maxWidth: "300px",
+      minWidth: "300px",
+      overflow: "hidden"
+    }
+  });
+
+  const ScrollDiv = styled("div")({
+    position: "relative",
+    minHeight: "300px",
+    maxHeight: "calc(100vh - 500px)",
+    overflow: "scroll"
+  });
+
+  //not working yet
   /*getStyleObjectFromString(`position:relative,
     z-index:10,
     background:#fff,
@@ -156,18 +177,28 @@ const Popup = (props) => {
 
                 <div>curPopupNum {props.curPopupNum}</div>
                 <div>{curPopup?.date}</div>
-                <SimpleBar style={{ maxHeight: 300 }}>
-                  <Html>{curPopup?.content}</Html>
 
+                {/*<SimpleBar style={{ maxHeight: "calc(100vh - 500px)" }}>
+                  <Html>{curPopup?.content}</Html>
                   {state === "entered" && curPopup?.iframe && (
                     <div
                       dangerouslySetInnerHTML={{ __html: curPopup?.iframe }}
                     />
                   )}
-                  {/*{enterDone && curPopup?.reactcontent}*/}
                   {state === "entered" && curPopup?.reactcontent}
-                  {/* without state condition slick damages transform rotate */}
-                </SimpleBar>
+                  </SimpleBar>*/}
+                <OverlayScrollbarsComponent>
+                  <ScrollDiv>
+                    <Html>{curPopup?.content}</Html>
+                    {state === "entered" && curPopup?.iframe && (
+                      <div
+                        dangerouslySetInnerHTML={{ __html: curPopup?.iframe }}
+                      />
+                    )}
+                    {state === "entered" && curPopup?.reactcontent}
+                  </ScrollDiv>
+                </OverlayScrollbarsComponent>
+
                 <hr />
                 <div>popup anim state: {state}</div>
 
